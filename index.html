@@ -19,7 +19,6 @@
             flex-direction: column;
         }
 
-        /* İsim */
         #name {
             position: relative;
             z-index: 10;
@@ -58,7 +57,6 @@
             }
         }
 
-        /* MENEKŞE */
         .flower {
             position: absolute;
             width: 8vw;
@@ -84,12 +82,17 @@
             }
         }
 
-        /* Responsive adjustments */
         @media (max-width: 600px) {
             #name {
                 font-size: 8vw;
                 letter-spacing: 1vw;
                 flex-direction: column;
+            }
+
+            /* boşluktan sonrası yeni satıra geçsin */
+            #name span:nth-child(n+6) {
+                width: 100%;
+                text-align: center;
             }
 
             .flower {
@@ -103,7 +106,7 @@
 <body>
     <div id="name"></div>
     <script>
-        const text = "TUĞBA FİDAN";
+        const text = "TUĞBA  FİDAN";
         const nameEl = document.getElementById("name");
         let delay = 0;
         text.split("").forEach(ch => {
