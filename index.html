@@ -19,19 +19,25 @@
             flex-direction: column;
         }
 
-        #name {
-            position: relative;
+        /* İsim ve Soyisim bölme */
+        .name-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             z-index: 10;
+        }
+
+        .name,
+        .surname {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
             font-size: 6vw;
-            color: #fff;
             font-weight: 900;
+            color: #fff;
             letter-spacing: 2vw;
             text-shadow: 0 0 6px rgba(255, 255, 255, 0.7), 0 0 14px rgba(155, 0, 255, 0.7);
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.5vw;
-            text-align: center;
         }
 
         .letter {
@@ -82,41 +88,42 @@
             }
         }
 
+        /* Responsive */
         @media (max-width: 600px) {
-            #name {
+
+            .name,
+            .surname {
                 font-size: 8vw;
                 letter-spacing: 1vw;
-                flex-direction: column;
-            }
-
-            /* boşluktan sonrası yeni satıra geçsin */
-            #name span:nth-child(n+6) {
-                width: 100%;
-                text-align: center;
-            }
-
-            .flower {
-                width: 10vw;
-                height: 10vw;
             }
         }
     </style>
 </head>
 
 <body>
-    <div id="name"></div>
+    <div class="name-container">
+        <div id="name" class="name"></div>
+        <div id="surname" class="surname"></div>
+    </div>
     <script>
-        const text = "TUĞBA  FİDAN";
-        const nameEl = document.getElementById("name");
-        let delay = 0;
-        text.split("").forEach(ch => {
-            const span = document.createElement("span");
-            span.className = "letter";
-            span.textContent = ch === " " ? "" : ch;
-            span.style.animationDelay = delay + "s";
-            nameEl.appendChild(span);
-            delay += 0.25;
-        });
+        const firstName = "TUĞBA";
+        const lastName = "FİDAN";
+
+        function renderLetters(text, containerId, startDelay = 0) {
+            const container = document.getElementById(containerId);
+            let delay = startDelay;
+            text.split("").forEach(ch => {
+                const span = document.createElement("span");
+                span.className = "letter";
+                span.textContent = ch;
+                span.style.animationDelay = delay + "s";
+                container.appendChild(span);
+                delay += 0.25;
+            });
+        }
+
+        renderLetters(firstName, "name", 0);
+        renderLetters(lastName, "surname", firstName.length * 0.25 + 0.5);
 
         function createFlower() {
             const f = document.createElement("div");
@@ -129,9 +136,7 @@
             setTimeout(() => f.remove(), 9000);
         }
 
-        for (let i = 0; i < 30; i++) {
-            setTimeout(createFlower, i * 150);
-        }
+        for (let i = 0; i < 30; i++) { setTimeout(createFlower, i * 150); }
         setInterval(createFlower, 400);
     </script>
 </body>
